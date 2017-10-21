@@ -18,23 +18,28 @@ class ClientThread(Thread):
             print("received data:", data)
             conn.send(data)  # echo
 
-TCP_IP = '0.0.0.0'
-TCP_PORT = 80
-BUFFER_SIZE = 20  # Normally 1024, but we want fast response
 
+def create_socket():
+    TCP_IP = '0.0.0.0'
+    TCP_PORT = 80
+    BUFFER_SIZE = 20  # Normally 1024, but we want fast response
 
-tcpsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-tcpsock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-tcpsock.bind((TCP_IP, TCP_PORT))
-threads = []
-
-while True:
+    tcpsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    tcpsock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    tcpsock.bind((TCP_IP, TCP_PORT))
     tcpsock.listen(4)
-    print("Waiting for incoming connections...")
-    (conn, (ip,port)) = tcpsock.accept()
-    newthread = ClientThread(ip,port)
-    newthread.start()
-    threads.append(newthread)
+    return tcpsock
 
-for t in threads:
-    t.join()
+
+if __name__ == "__main__":
+    sock = create_socket()
+    threads = []
+    while True:
+        print("Waiting for incoming connections...")
+        (conn, (ip,port)) = sock.accept()
+        newthread = ClientThread(ip,port)
+        newthread.start()
+        threads.append(newthread)
+
+    for t in threads:
+        t.join()

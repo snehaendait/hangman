@@ -29,15 +29,22 @@ class hangman:
             result = "Won!"
             self.end = True
         elif len(self.wrong) >= self.LIMIT:
-            result = "Lost!"
+            result = "Lost! The word was %r" % self.word
             self.end = True
         else:
-            result = "Still in progress"
+            result = "Game in progress"
         return result
 
     def show_correct_guesses(self):
         return " ".join([letter if letter in self.right else "_" for letter in self.word])
 
+
+    def __str__(self):
+        result = "\n" + "=" * 30 + "\n"
+        result += "\nIncorrect guesses: %s" % ", ".join(self.wrong)
+        result += "\nProgress: %s" % self.show_correct_guesses()
+        result += "\n" + self.result()
+        return result
 
 def get_guess(game):
     while True:

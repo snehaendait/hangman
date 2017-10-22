@@ -1,8 +1,6 @@
 import random
 import string
 
-from awscli.compat import raw_input
-
 
 class hangman:
     LIMIT = 10
@@ -48,13 +46,13 @@ class hangman:
 
 def get_guess(game):
     while True:
-        input = raw_input("Guess a letter: ").lower()
-        if len(input) > 1 or not input.isalpha() :
+        guess = input("Guess a letter: ").lower()
+        if len(guess) > 1 or not guess.isalpha() :
             print("Please input one character: ")
-        elif input in game.right or input in game.wrong:
+        elif guess in game.right or guess in game.wrong:
             print("You already tried that input! Try again: ")
         else:
-            return input
+            return guess
 
 if __name__ == "__main__":
     play_more = True
@@ -68,6 +66,6 @@ if __name__ == "__main__":
             game.result()
         print(game.result())
         print(game.word)
-        keep_playing = raw_input("Do you want to keep playing y/n? : ").lower()
+        keep_playing = input("Do you want to keep playing y/n? : ").lower()
         if keep_playing == 'n':
             play_more = False

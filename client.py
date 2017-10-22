@@ -1,7 +1,5 @@
 import socket
 
-from awscli.compat import raw_input
-
 import connection
 
 TCP_IP = '127.0.0.1'
@@ -48,16 +46,16 @@ if __name__ == "__main__":
             elif msg == "False":
                 current_state = WAITING_FOR_USER_INPUT
         elif current_state is WAITING_FOR_USER_INPUT:
-            input = raw_input("Guess a letter: ").lower()
-            if input == ":q":
+            guess = input("Guess a letter: ").lower()
+            if guess == ":q":
                 current_state = quit(messenger)
-            elif len(input) > 1 or not input.isalpha():
+            elif len(guess) > 1 or not guess.isalpha():
                 print ("Please guess a letter.")
             else:
-                messenger.send(input)
+                messenger.send(guess)
                 current_state = WAITING_FOR_BOARD
         elif current_state is WAITING_TO_PLAY_AGAIN:
-            play_again = raw_input("Play again? (y/n): ").lower()
+            play_again = input("Play again? (y/n): ").lower()
             if "y" in play_again:
                 current_state = WAITING_FOR_WELCOME
                 messenger.send("play")

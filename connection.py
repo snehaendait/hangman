@@ -1,4 +1,4 @@
-EOM = "::"
+EOM = "~"
 
 
 class Connection:

@@ -28,7 +28,10 @@ class ClientThread(Thread):
                 current_state = WAITING_FOR_MOVE
             elif current_state is WAITING_FOR_MOVE:
                 letter = messenger.read()
-                if letter in game.right or letter in game.wrong:
+                if letter == "quit":
+                    current_state = GAME_OVER
+                    reply = ""
+                elif letter in game.right or letter in game.wrong:
                     reply = "You already tried %r! Try again " % letter
                 else:
                     game.guess(letter)

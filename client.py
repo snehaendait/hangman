@@ -22,6 +22,12 @@ def create_socket():
     #print("received data:", data)
     return s
 
+def quit(messenger):
+    state = GAME_OVER
+    messenger.send("quit")
+    print ("Thanks for playing!")
+    return state
+
 if __name__ == "__main__":
     sock = create_socket()
     sock.connect((TCP_IP,TCP_PORT))
@@ -43,7 +49,9 @@ if __name__ == "__main__":
                 current_state = WAITING_FOR_USER_INPUT
         elif current_state is WAITING_FOR_USER_INPUT:
             input = raw_input("Guess a letter: ").lower()
-            if len(input) > 1 or not input.isalpha():
+            if input == ":q":
+                current_state = quit(messenger)
+            elif len(input) > 1 or not input.isalpha():
                 print ("Please guess a letter.")
             else:
                 messenger.send(input)

@@ -32,7 +32,7 @@ class hangman:
             result = "Lost! The word was %r" % self.word
             self.end = True
         else:
-            result = "Game in progress"
+            result = "Game in progress.. To quit, type ':q'"
         return result
 
     def show_correct_guesses(self):
@@ -40,7 +40,7 @@ class hangman:
 
 
     def __str__(self):
-        result = "\n" + "=" * 30 + "\n"
+        result = "\n" + "#" * 30 + "\n"
         result += "\nIncorrect guesses: %s" % ", ".join(self.wrong)
         result += "\nProgress: %s" % self.show_correct_guesses()
         result += "\n" + self.result()

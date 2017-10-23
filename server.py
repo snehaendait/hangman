@@ -1,3 +1,5 @@
+#!/usr/bin/python3.5
+
 import socket
 from hangman import hangman
 from threading import Thread

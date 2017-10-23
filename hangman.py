@@ -1,6 +1,4 @@
 import random
-import string
-
 
 class hangman:
     LIMIT = 10

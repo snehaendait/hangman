@@ -5,26 +5,28 @@ import string
 class hangman:
     LIMIT = 10
 
-    def __init__(self):
+    def __init__(self):  # initialize game
         self.word = self.get_random_word().lower()
         self.right = []
         self.wrong = []
+        self.won = False
         self.end = False
 
-    def get_random_word(self):
+    def get_random_word(self):  # get a random word from the word list - TODO: modify this to get words of animals, places, bases on user choices
         wordlist = open('wordlist.txt','r').readlines()
         words = [word.strip() for word in wordlist]
         return random.choice(words)
 
-    def guess(self, letter):
+    def guess(self, letter):  # check if the guessed letter is correct
         if letter in self.word:
             self.right.append(letter)
         else:
             self.wrong.append(letter)
 
-    def result(self):
+    def result(self):  # return the result of the game - won, lost, in progress
         if set(self.right) == set(self.word) and len(self.wrong) < self.LIMIT:
             result = "Won!"
+            self.won = True
             self.end = True
         elif len(self.wrong) >= self.LIMIT:
             result = "Lost! The word was %r" % self.word
@@ -33,7 +35,7 @@ class hangman:
             result = "Game in progress.. To quit, type ':q'"
         return result
 
-    def show_correct_guesses(self):
+    def show_correct_guesses(self):  # method to display progress
         return " ".join([letter if letter in self.right else "_" for letter in self.word])
 
 
